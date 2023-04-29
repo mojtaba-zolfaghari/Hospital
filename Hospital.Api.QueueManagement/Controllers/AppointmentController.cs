@@ -83,63 +83,9 @@ namespace Hospital.Api.QueueManagement.Controllers
             return new ServiceActionResult<List<Get_AvailableDoctors_Response>>(availableDoctors);
         }
 
-        /// <summary>
-        /// Add User
-        /// </summary>
-        /// <param name="request"></param>
-        /// <returns></returns>
-        [HttpPost, Route("AddDoctor"), HospitalAuthorization]
-        public async Task<ServiceActionResult<string>> AddUser(Add_Doctor_Request request)
-        {
-            try
-            {
-                if (request == null) return new ServiceActionResult<string>("model properties is null", HttpStatusCode.BadRequest);
+        
 
-                if (_hospitalUnitOfWork.DoctorRepository.GetExists(c => c.FirstName == request.FirstName))
-                    return new ServiceActionResult<string>("this username already exist!", HttpStatusCode.Conflict);
-
-                if (_hospitalUnitOfWork.UserRepository.GetOne(c => c.UserDetail.Email == request.Email, e => e.UserDetail) != null)
-                    return new ServiceActionResult<string>("this email already exist!", HttpStatusCode.Conflict);
-
-                var currentUserId = GeneralUtilities.GetCurrentUserId(_httpContextAccessor);
-                var hasAccessToCreateHotel = _hospitalUnitOfWork.UserRepository.hasAccessToCurrentOPeration(currentUserId);
-                if (hasAccessToCreateHotel)
-                {
-                    User user = new()
-                    {
-                        Username = request.Username,
-                        //IPList = request.IPList,
-                        //LanguageId = request.LanguageId,
-                        Password = BCrypt.Net.BCrypt.HashPassword(request.Password),
-                        Name = request.Name + " " + request.LastName,
-                        Active = true,
-                        EnForceChangePassword = true,
-                        UserDetail = new UserDetail
-                        {
-                            FirstName = request.Name,
-                            LastName = request.LastName,
-                            Email = request.Email
-                        }
-                    };
-
-                    _hospitalUnitOfWork.UserRepository.Create(user);
-
-                    await _hospitalUnitOfWork.SaveAsync();
-                    return new ServiceActionResult<string>(null, "DONE");
-                }
-                else
-                {
-                    return new ServiceActionResult<string>("Access denied", HttpStatusCode.Forbidden);
-                }
-            }
-            catch (Exception ex)
-            {
-                await _httpContextAccessor.HttpContext.RaiseError(ex);
-                return new ServiceActionResult<string>();
-            }
-        }
-
-
+        
 
     }
 }

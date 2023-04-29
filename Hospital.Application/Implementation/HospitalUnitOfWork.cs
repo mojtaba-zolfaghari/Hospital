@@ -50,8 +50,15 @@ namespace Hospital.Application.Implementation
         private IUserRoleRepository _userRoleRepository;
         public IUserRoleRepository UserRoleRepository => _userRoleRepository ??= new UserRoleRepository(dbContext);
 
+
+
+        #endregion
+        #region Doctor
         private IDoctorRepository _doctorRepository;
         public IDoctorRepository DoctorRepository => _doctorRepository??=new DoctorRepository(dbContext);
+
+        private IWorkingHourRepository _workingHourRepository;
+        public IWorkingHourRepository WorkingHourRepository => _workingHourRepository??= new WorkingHourRepository(dbContext);
         #endregion
     }
 }

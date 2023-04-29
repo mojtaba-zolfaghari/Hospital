@@ -9,7 +9,7 @@ namespace Hospital.Domain.DoctorEntity
         public TimeSpan StartTime { get; set; }
         public TimeSpan EndTime { get; set; }
         public int Capacity { get; set; }
-        public int DoctorId { get; set; }
+        public Guid DoctorId { get; set; }
         public virtual Doctor Doctor { get; set; }
     }
 }

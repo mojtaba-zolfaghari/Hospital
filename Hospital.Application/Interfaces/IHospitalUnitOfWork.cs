@@ -30,5 +30,9 @@ namespace Hospital.Application.Interfaces
         IUserRoleRepository UserRoleRepository { get; }
         IDoctorRepository DoctorRepository { get; }
         #endregion
+
+        #region Doctor
+        IWorkingHourRepository WorkingHourRepository { get; }
+        #endregion
     }
 }
