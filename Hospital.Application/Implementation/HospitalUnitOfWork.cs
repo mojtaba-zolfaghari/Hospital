@@ -1,7 +1,9 @@
-﻿using Hospital.Application.Implementation.Auth;
+﻿using Hospital.Application.Implementation.Appointment;
+using Hospital.Application.Implementation.Auth;
 using Hospital.Application.Implementation.Doctor;
 using Hospital.Application.Implementation.Logger;
 using Hospital.Application.Interfaces;
+using Hospital.Application.Interfaces.Appointment;
 using Hospital.Application.Interfaces.Auth;
 using Hospital.Application.Interfaces.Doctor;
 using Hospital.Application.Interfaces.Logger;
@@ -55,10 +57,14 @@ namespace Hospital.Application.Implementation
         #endregion
         #region Doctor
         private IDoctorRepository _doctorRepository;
-        public IDoctorRepository DoctorRepository => _doctorRepository??=new DoctorRepository(dbContext);
+        public IDoctorRepository DoctorRepository => _doctorRepository ??= new DoctorRepository(dbContext);
 
         private IWorkingHourRepository _workingHourRepository;
-        public IWorkingHourRepository WorkingHourRepository => _workingHourRepository??= new WorkingHourRepository(dbContext);
+        public IWorkingHourRepository WorkingHourRepository => _workingHourRepository ??= new WorkingHourRepository(dbContext);
+        #endregion
+        #region Appointment
+        private IAppointmentRepository _appointmentRepository;
+        public IAppointmentRepository Appointment => _appointmentRepository ??= new AppointmentRepository(dbContext);
         #endregion
     }
 }

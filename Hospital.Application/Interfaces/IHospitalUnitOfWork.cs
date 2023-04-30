@@ -1,4 +1,5 @@
 ﻿using Hospital.Application.Implementation.Auth;
+using Hospital.Application.Interfaces.Appointment;
 using Hospital.Application.Interfaces.Auth;
 using Hospital.Application.Interfaces.Doctor;
 using Hospital.Application.Interfaces.Logger;
@@ -33,6 +34,9 @@ namespace Hospital.Application.Interfaces
 
         #region Doctor
         IWorkingHourRepository WorkingHourRepository { get; }
+        #endregion
+        #region Appointment
+        IAppointmentRepository Appointment { get; }
         #endregion
     }
 }

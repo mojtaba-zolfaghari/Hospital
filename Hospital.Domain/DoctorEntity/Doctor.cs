@@ -1,19 +1,21 @@
 ﻿using Hospital.Domain.QueueEntity;
 using Hospital.Shared.Shared;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static Hospital.Domain.Shared.SharedEnums;
+using Hospital.Shared.Utitlities;
+using Hospital.Shared.Utitlities.Attributes;
 
 namespace Hospital.Domain.DoctorEntity
 {
     public class Doctor : BaseEntity
     {
+        [OperatorComparer(PublicEnumes.OperatorComparer.Contains)]
         public string FirstName { get; set; }
+
+        [OperatorComparer(PublicEnumes.OperatorComparer.Contains)]
         public string LastName { get; set; }
+
+        [OperatorComparer(PublicEnumes.OperatorComparer.Equals)]
         public int CapacityPerDay { get; set; }
+
         public virtual ICollection<Appointment> Appointments { get; set; }
         public virtual ICollection<WorkingHour> WorkingHours { get; set; }
     }

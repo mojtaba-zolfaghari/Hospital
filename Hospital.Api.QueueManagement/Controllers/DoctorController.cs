@@ -7,6 +7,8 @@ using Hospital.Shared.Shared;
 using Hospital.Shared.Utitlities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq.Dynamic.Core;
+using System.Linq.Expressions;
 using System.Net;
 
 
@@ -19,13 +21,9 @@ namespace Hospital.Api.QueueManagement.Controllers
         public DoctorController(IHttpContextAccessor httpContextAccessor, IHospitalUnitOfWork hospitalUnitOfWork) : base(httpContextAccessor, hospitalUnitOfWork)
         {
         }
-        /// <summary>
-        /// Add doctor
-        /// </summary>
-        /// <param name="request"></param>
-        /// <returns></returns>
-        [HttpPost, Route("AddDoctor")]
-        public async Task<ServiceActionResult<string>> AddDoctor(Add_Doctor_Request request)
+
+        [HttpPost, Route("Add")/*, HospitalAuthorization*/]
+        public async Task<ServiceActionResult<string>> Add(Add_Doctor_Request request)
         {
             try
             {
@@ -36,26 +34,25 @@ namespace Hospital.Api.QueueManagement.Controllers
 
                 var currentUserId = GeneralUtilities.GetCurrentUserId(_httpContextAccessor);
                 var hasAccessToCreateHotel = _hospitalUnitOfWork.UserRepository.hasAccessToCurrentOPeration(currentUserId);
-
                 if (hasAccessToCreateHotel)
                 {
-                    Doctor doctor = new Doctor
+                    Doctor doctor = new()
                     {
                         LastName = request.LastName,
                         FirstName = request.FirstName,
                         CapacityPerDay = request.CapacityPerDay,
-                        WorkingHours = request.WorkingHours?.Select(w => new WorkingHour
+                        WorkingHours = request.WorkingHours.Select(wh => new WorkingHour
                         {
-                            DayOfWeek = w.DayOfWeek,
-                            StartTime = w.StartTime,
-                            EndTime = w.EndTime,
-                            Capacity = w.Capacity
+                            DayOfWeek = wh.DayOfWeek,
+                            StartTime = TimeSpan.Parse(wh.StartTime),
+                            EndTime = TimeSpan.Parse(wh.EndTime),
+                            Capacity = wh.Capacity
                         }).ToList()
                     };
 
                     _hospitalUnitOfWork.DoctorRepository.Create(doctor);
-                    await _hospitalUnitOfWork.SaveAsync();
 
+                    await _hospitalUnitOfWork.SaveAsync();
                     return new ServiceActionResult<string>(null, "DONE");
                 }
                 else
@@ -70,7 +67,80 @@ namespace Hospital.Api.QueueManagement.Controllers
             }
         }
 
+        [HttpGet, Route("Get")/*, HospitalAuthorization*/]
+        public async Task<ServiceActionResult<Get_Doctor_Response>> Get([FromHeader] Get_Doctor_Request request)
+        {
+            try
+            {
+                var doctor = await _hospitalUnitOfWork.DoctorRepository.GetByIdAsync(request.DoctorId);
+                if (doctor == null) return new ServiceActionResult<Get_Doctor_Response>("Doctor not found", HttpStatusCode.NotFound);
+
+                var doctorDTO = new Get_Doctor_Response
+                {
+                    Id = doctor.Id,
+                    FirstName = doctor.FirstName,
+                    LastName = doctor.LastName,
+                    CapacityPerDay = doctor.CapacityPerDay,
+                    WorkingHours = doctor.WorkingHours?.Select(wh => new WorkingHourDTO()
+                    {
+                        DayOfWeek = wh.DayOfWeek,
+                        StartTime = wh.StartTime.ToString(@"hh\:mm"),
+                        EndTime = wh.EndTime.ToString(@"hh\:mm"),
+                        Capacity = wh.Capacity
+                    }).ToList()
+                };
+                return new ServiceActionResult<Get_Doctor_Response>(doctorDTO, "DONE");
 
 
+            }
+            catch (Exception ex)
+            {
+                await _httpContextAccessor.HttpContext.RaiseError(ex);
+                return new ServiceActionResult<Get_Doctor_Response>();
+            }
+
+        }
+
+        [HttpGet, Route("List")/*, HospitalAuthorization*/]
+        public async Task<ServiceActionResult<ListResult<Get_Doctor_Response>>> List([FromQuery] Get_Doctors_Request request)
+        {
+            try
+            {
+                Expression buildingPredicate = request.Filters.ToPredicate<Doctor>(typeof(Doctor));
+
+                var doctors = await _hospitalUnitOfWork.DoctorRepository.GetAsync((Expression<Func<Doctor, bool>>)buildingPredicate, c => c.OrderBy(request.OrderBy + " " + request.SortType), request.Skip, request.Take);
+
+                var totalCount = await _hospitalUnitOfWork.DoctorRepository.GetCountAsync();
+                var doctorResponses = doctors.Select(doctor => new Get_Doctor_Response
+                {
+                    Id = doctor.Id,
+                    FirstName = doctor.FirstName,
+                    LastName = doctor.LastName,
+                    CapacityPerDay = doctor.CapacityPerDay,
+                    WorkingHours = doctor.WorkingHours?.Select(wh => new WorkingHourDTO()
+                    {
+                        DayOfWeek = wh.DayOfWeek,
+                        StartTime = wh.StartTime.ToString(@"hh\:mm"),
+                        EndTime = wh.EndTime.ToString(@"hh\:mm"),
+                        Capacity = wh.Capacity
+                    }).ToList()
+                }).ToList();
+
+                var listResult = new ListResult<Get_Doctor_Response>(doctorResponses, totalCount);
+
+                return new ServiceActionResult<ListResult<Get_Doctor_Response>>(listResult);
+            }
+            catch (Exception ex)
+            {
+                await _httpContextAccessor.HttpContext.RaiseError(ex);
+                return new ServiceActionResult<ListResult<Get_Doctor_Response>>();
+            }
+        }
     }
+
+
+
+
+
 }
+

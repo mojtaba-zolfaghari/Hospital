@@ -26,66 +26,65 @@ namespace Hospital.Api.QueueManagement.Controllers
         public AppointmentController(IHttpContextAccessor httpContextAccessor, IHospitalUnitOfWork hospitalUnitOfWork) : base(httpContextAccessor, hospitalUnitOfWork)
         {
         }
-        [HttpGet("available")]
-        public async Task<ActionResult<ServiceActionResult<List<Get_AvailableDoctors_Response>>>> GetAvailableDoctors(DateTime date)
+
+        [HttpGet, Route("AvailableDoctors")]
+        public async Task<ServiceActionResult<List<TimeSpan>>> Get_AvailableDoctors([FromQuery] Get_AvailableDoctors_Request request)
         {
-            var doctors = await _hospitalUnitOfWork.DoctorRepository.GetAvailableDoctors(date);
-            var availableDoctors = new List<Get_AvailableDoctors_Response>();
-
-            var dayOfWeekMap = new Dictionary<DayOfWeek, DayOfWeekEnum>
-                               {
-                                   { DayOfWeek.Monday, DayOfWeekEnum.Monday },
-                                   { DayOfWeek.Tuesday, DayOfWeekEnum.Tuesday },
-                                   { DayOfWeek.Wednesday, DayOfWeekEnum.Wednesday },
-                                   { DayOfWeek.Thursday, DayOfWeekEnum.Thursday },
-                                   { DayOfWeek.Friday, DayOfWeekEnum.Friday },
-                                   { DayOfWeek.Saturday, DayOfWeekEnum.Saturday },
-                                   { DayOfWeek.Sunday, DayOfWeekEnum.Sunday }
-                               };
-
-            var dayOfWeek = dayOfWeekMap[date.DayOfWeek];
-
-            foreach (var doctor in doctors)
+            try
             {
-                var availableSlots = doctor.WorkingHours
-                    .Where(w => w.DayOfWeek == dayOfWeek)
-                    .Select(w => new AvailableSlot
-                    {
-                        StartTime = date.Date.Add(w.StartTime),
-                        EndTime = date.Date.Add(w.EndTime),
-                        Capacity = w.Capacity - doctor.Appointments.Count(a => a.StartTime.Date == date && a.DoctorId == doctor.Id && a.Status == AppointmentStatus.Done)
-                    })
-                    .ToList();
+                // Get the doctor from the database
+                var doctor = await _hospitalUnitOfWork.DoctorRepository.GetOneAsync(c=>c.Id==request.DoctorId);
 
-                var bookedSlots = doctor.Appointments
-                    .Where(a => a.StartTime.Date == date && a.Status == AppointmentStatus.Done)
-                    .Select(a => new BookedSlot
-                    {
-                        StartTime = a.StartTime,
-                        PatientName = $"{a.Patient.FirstName}+ {a.Patient.LastName}",
-                        PatientPhoneNumber = a.Patient.PhoneNumber,
-                        NationalCode = a.Patient.NationalCode
-                    })
-                    .ToList();
+                if (doctor == null) return new ServiceActionResult<List<TimeSpan>>(new List<TimeSpan>(), 0);
 
-                var doctorResponse = new Get_AvailableDoctors_Response
+
+                // Get the appointments for the selected doctor on the selected date
+                var appointments = await _hospitalUnitOfWork.Appointment.GetAsync(a => a.DoctorId == doctor.Id && a.StartTime.Date == request.Date.Date);
+
+                // Get the doctor's working hours for the selected day
+                var workingHours = doctor.WorkingHours.FirstOrDefault(wh => wh.DayOfWeek == request.Date.DayOfWeek);
+
+                if (workingHours == null)
                 {
-                    Id = doctor.Id,
-                    FirstName = doctor.FirstName,
-                    LastName = doctor.LastName,
-                    AvailableSlots = availableSlots,
-                    BookedSlots = bookedSlots
-                };
+                    return new ServiceActionResult<List<TimeSpan>>(new List<TimeSpan>(), 0);
+                }
 
-                availableDoctors.Add(doctorResponse);
+                // Get the start time and end time for the doctor's working hours
+                var startTime = workingHours.StartTime;
+                var endTime = workingHours.EndTime;
+
+                // Get the duration of each appointment in minutes
+                var appointmentDuration = request.HoursTakes * 60;
+
+                // Create a list to hold the available time slots
+                var availableTimeSlots = new List<TimeSpan>();
+
+                // Loop through the time slots from the start time to the end time, in increments of the appointment duration
+                for (var time = startTime; time.AddMinutes(appointmentDuration) <= endTime; time = time.AddMinutes(appointmentDuration))
+                {
+                    // Check if the current time slot is already taken by an appointment
+                    if (appointments.Any(a => a.StartTime.TimeOfDay == time))
+                    {
+                        continue;
+                    }
+
+                    // Add the current time slot to the list of available time slots
+                    availableTimeSlots.Add(time);
+                }
+
+                return new ServiceActionResult<List<TimeSpan>>(availableTimeSlots);
             }
-
-            return new ServiceActionResult<List<Get_AvailableDoctors_Response>>(availableDoctors);
+            catch (Exception ex)
+            {
+                await _httpContextAccessor.HttpContext.RaiseError(ex);
+                return new ServiceActionResult<List<TimeSpan>>();
+            }
         }
 
-        
 
-        
+
+
+
 
     }
 }

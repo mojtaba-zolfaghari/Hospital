@@ -80,7 +80,7 @@ namespace Hospital.Shared.Utitlities
 
         public static string GetNullPropertiesMessage<T>(T obj, params string[] ignoreProperties)
         {
-            List<string> nullProperties = new List<string>();
+            List<string> nullProperties = new();
 
             PropertyInfo[] properties = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
 
