@@ -18,15 +18,11 @@ namespace Hospital.Application.Implementation.Doctor
         public async Task<List<Domain.DoctorEntity.Doctor>> GetAvailableDoctors(DateTime date)
         {
             var _dbContext = (Context as QueueDbContext);
-            var dayOfWeek = ConvertToDayOfWeekEnum(date.DayOfWeek);
+            //var dayOfWeek = ConvertToDayOfWeekEnum(date.DayOfWeek);
             var availableDoctors = await _dbContext.Doctors
-                .Include(d => d.WorkingHours)
                 .Include(d => d.Appointments)
                 .ThenInclude(a => a.Patient)
-                .Where(d => d.WorkingHours.Any(w => w.DayOfWeek == dayOfWeek &&
-                                                    w.StartTime <= date.TimeOfDay &&
-                                                    w.EndTime >= date.TimeOfDay &&
-                                                    w.Capacity > d.Appointments.Count(a => a.StartTime.Date == date)))
+                .Where(c=>c.IsAvailable)
                 .ToListAsync();
 
             return availableDoctors;

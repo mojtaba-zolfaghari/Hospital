@@ -6,9 +6,10 @@ namespace Hospital.Domain.QueueEntity
 {
     public class Appointment : BaseEntity
     {
-        public DateTime StartTime { get; set; }
+        public DateTime Date { get; set; }
         public bool IsConfirmed { get; set; }
-        public Guid PatientId { get; set; }
+        public int QueuingNumber { get; set; }
+        public Guid? PatientId { get; set; }
         public virtual Patient Patient { get; set; }
         public AppointmentStatus Status { get; set; }
         public Guid DoctorId { get; set; }

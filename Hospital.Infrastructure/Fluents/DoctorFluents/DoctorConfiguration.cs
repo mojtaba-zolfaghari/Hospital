@@ -26,8 +26,8 @@ namespace Hospital.Infrastructure.Fluents.DoctorFluents
             builder.Property(s => s.CreationDate)
                 .ValueGeneratedOnAdd()
                 .HasConversion<DateTime>();
-                
-                            builder.Property(s => s.ModifiedDate)
+
+            builder.Property(s => s.ModifiedDate)
                 .ValueGeneratedOnUpdate()
                 .HasConversion<DateTime>();
 
@@ -43,13 +43,6 @@ namespace Hospital.Infrastructure.Fluents.DoctorFluents
                 .WithOne(a => a.Doctor)
                 .HasForeignKey(a => a.DoctorId)
                 .OnDelete(DeleteBehavior.Restrict);
-
-            builder.Property(d => d.WorkingHours)
-    .IsRequired()
-    .HasConversion(
-        v => JsonConvert.SerializeObject(v),
-        v => JsonConvert.DeserializeObject<List<WorkingHour>>(v));
         }
     }
 }
-

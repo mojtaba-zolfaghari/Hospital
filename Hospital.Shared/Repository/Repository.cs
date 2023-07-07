@@ -121,6 +121,7 @@ namespace Hospital.Shared.Repository
 
         public virtual void Create(T entity)
         {
+            entity.ModifiedDate = DateTime.UtcNow;
             entity.CreationDate = DateTime.UtcNow;
             DbSet.Add(entity);
         }

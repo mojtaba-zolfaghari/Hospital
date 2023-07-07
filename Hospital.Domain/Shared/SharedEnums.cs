@@ -27,13 +27,14 @@ namespace Hospital.Domain.Shared
         
         public enum AppointmentStatus
         {
-            Requested=0,
-            WaitngToAcceptByHospital = 1,
-            ProcessingByHospital=2,
-            Done = 3,
-            Canceled=4,
-            NoShow=5,
-            Rescheduled=6
+            NotBook=0,
+            Requested=1,
+            WaitngToAcceptByHospital = 2,
+            ProcessingByHospital=3,
+            Done = 4,
+            Canceled=5,
+            NoShow=6,
+            Rescheduled=7
         }
         public enum OperationAction
         {

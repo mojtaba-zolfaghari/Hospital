@@ -32,9 +32,6 @@ namespace Hospital.Application.Implementation
         #region Logger
         private ILoggerRepository _loggerRepository;
         public ILoggerRepository LoggerRepository => _loggerRepository ??= new LoggerRepository(dbContext);
-
-
-
         #endregion
 
         private IRouteRepository _routeRepository;
@@ -50,8 +47,17 @@ namespace Hospital.Application.Implementation
         private IUserRoleRepository _userRoleRepository;
         public IUserRoleRepository UserRoleRepository => _userRoleRepository ??= new UserRoleRepository(dbContext);
 
+        #endregion
+        #region Doctor
         private IDoctorRepository _doctorRepository;
-        public IDoctorRepository DoctorRepository => _doctorRepository??=new DoctorRepository(dbContext);
+        public IDoctorRepository DoctorRepository => _doctorRepository ??= new DoctorRepository(dbContext);
+
+        private IAppointmentRepository _appointmentRepository;
+        public IAppointmentRepository AppointmentRepository => _appointmentRepository ??= new AppointmentRepository(dbContext);
+
+        private IPatientRepository _patientRepository;
+        public IPatientRepository PatientRepository => _patientRepository ??=new PatientRepository(dbContext);
+
         #endregion
     }
 }

@@ -20,12 +20,12 @@ namespace Hospital.Infrastructure.Fluents
             builder.Property(q => q.CreationDate).ValueGeneratedOnAdd();
             builder.Property(q => q.ModifiedDate).ValueGeneratedOnUpdate();
 
-            builder.Property(a => a.StartTime).IsRequired();
+            builder.Property(a => a.Date).IsRequired();
 
             builder.Property(a => a.IsConfirmed).IsRequired();
             builder.Property(a => a.Status).IsRequired();
 
-            builder.Property(a => a.PatientId).IsRequired();
+            //builder.Property(a => a.PatientId).IsRequired();
             builder.HasOne(a => a.Patient)
                 .WithMany(p => p.Appointments)
                 .HasForeignKey(a => a.PatientId)

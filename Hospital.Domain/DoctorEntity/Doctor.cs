@@ -14,7 +14,7 @@ namespace Hospital.Domain.DoctorEntity
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public int CapacityPerDay { get; set; }
+        public bool IsAvailable { get; set; }
         public virtual ICollection<Appointment> Appointments { get; set; }
-        public virtual ICollection<WorkingHour> WorkingHours { get; set; }
     }
 }

@@ -28,7 +28,12 @@ namespace Hospital.Application.Interfaces
         IRouteRepository RouteRepository { get; }
         IRoleRouteRepository RoleRouteRepository { get; }
         IUserRoleRepository UserRoleRepository { get; }
+        #endregion
+
+        #region Doctor
         IDoctorRepository DoctorRepository { get; }
+        IAppointmentRepository AppointmentRepository { get; }
+        IPatientRepository PatientRepository { get; }
         #endregion
     }
 }

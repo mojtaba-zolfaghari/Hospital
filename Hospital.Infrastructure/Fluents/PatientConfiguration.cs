@@ -17,16 +17,6 @@ namespace Hospital.Infrastructure.Fluents
 
             builder.HasKey(p => p.Id);
 
-            builder.Property(p => p.Id)
-                .ValueGeneratedOnAdd()
-                .HasConversion<Guid>();
-
-            builder.Property(q => q.CreationDate).ValueGeneratedOnAdd();
-            builder.Property(q => q.ModifiedDate).ValueGeneratedOnUpdate();
-
-            builder.Property(p => p.ModifiedDate)
-                .IsRequired();
-
             builder.Property(p => p.FirstName)
                 .HasMaxLength(100)
                 .IsRequired();    
