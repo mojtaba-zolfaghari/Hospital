@@ -1,9 +1,13 @@
 ﻿using ElmahCore;
+using Hospital.Api.QueueManagement.DTO;
+using Hospital.Api.QueueManagement.DTO.Auth.User;
 using Hospital.Api.QueueManagement.DTO.Doctor;
 using Hospital.Api.QueueManagement.Utilities;
 using Hospital.Application.Interfaces;
+using Hospital.Domain.AuthEntity;
 using Hospital.Domain.DoctorEntity;
 using Hospital.Domain.QueueEntity;
+using Hospital.Infrastructure.Migrations;
 using Hospital.Shared.Shared;
 using Hospital.Shared.Utitlities;
 using Microsoft.AspNetCore.Http;
@@ -12,6 +16,7 @@ using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using static Hospital.Domain.Shared.SharedEnums;
 
 namespace Hospital.Api.QueueManagement.Controllers
 {
@@ -160,6 +165,8 @@ namespace Hospital.Api.QueueManagement.Controllers
                 return new ServiceActionResult<string>();
             }
         }
+
+
 
     }
 }

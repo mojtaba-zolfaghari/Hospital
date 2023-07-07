@@ -38,4 +38,9 @@
 	  <ProjectReference Include="..\Hospital.Application\Hospital.Application.csproj" />
 	  <ProjectReference Include="..\Hospital.Infrastructure\Hospital.Infrastructure.csproj" />
 	</ItemGroup>
+
+
+	<ItemGroup>
+	  <Folder Include="DTO\Appointement\" />
+	</ItemGroup>
 </Project>

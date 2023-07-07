@@ -10,21 +10,21 @@ namespace Hospital.Domain.Shared
     {
         public enum DayOfWeekEnum
         {
+            Saturday = 1,
+            Sunday,
             Monday,
             Tuesday,
             Wednesday,
             Thursday,
-            Friday,
-            Saturday,
-            Sunday
+            Friday
         }
         public enum Gender
         {
             Male = 1,
-            Female=2,
+            Female = 2,
             Other = 3
         }
-        
+
         public enum AppointmentStatus
         {
             NotBook=0,

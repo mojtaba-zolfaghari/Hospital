@@ -1,7 +1,9 @@
-﻿using Hospital.Application.Implementation.Auth;
+﻿using Hospital.Application.Implementation.Appointment;
+using Hospital.Application.Implementation.Auth;
 using Hospital.Application.Implementation.Doctor;
 using Hospital.Application.Implementation.Logger;
 using Hospital.Application.Interfaces;
+using Hospital.Application.Interfaces.Appointment;
 using Hospital.Application.Interfaces.Auth;
 using Hospital.Application.Interfaces.Doctor;
 using Hospital.Application.Interfaces.Logger;
