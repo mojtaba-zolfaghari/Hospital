@@ -3,17 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33516.290
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hospital.Domain", "Hospital.Domain\Hospital.Domain.csproj", "{68C04EC7-6972-4D35-B6DE-FC2D3C40A0FD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hospital.Domain", "Hospital.Domain\Hospital.Domain.csproj", "{68C04EC7-6972-4D35-B6DE-FC2D3C40A0FD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hospital.Infrastructure", "Hospital.Infrastructure\Hospital.Infrastructure.csproj", "{48FEB111-027D-42A6-85C8-4015E2C0E5DD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hospital.Infrastructure", "Hospital.Infrastructure\Hospital.Infrastructure.csproj", "{48FEB111-027D-42A6-85C8-4015E2C0E5DD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hospital.Application", "Hospital.Application\Hospital.Application.csproj", "{3FF4AD48-530D-4282-987A-099E30DA8E61}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hospital.Application", "Hospital.Application\Hospital.Application.csproj", "{3FF4AD48-530D-4282-987A-099E30DA8E61}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hospital.Shared", "Hospital.Shared\Hospital.Shared.csproj", "{9EA3A257-9212-446F-867B-6D4D7E929D18}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hospital.Shared", "Hospital.Shared\Hospital.Shared.csproj", "{9EA3A257-9212-446F-867B-6D4D7E929D18}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hospital.Api.QueueManagement", "Hospital.Api.QueueManagement\Hospital.Api.QueueManagement.csproj", "{FE967CE2-69CF-4065-8624-452D82AC6CAA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hospital.Api.QueueManagement", "Hospital.Api.QueueManagement\Hospital.Api.QueueManagement.csproj", "{FE967CE2-69CF-4065-8624-452D82AC6CAA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hospital.Api.Blog", "Hospital.Api.Blog\Hospital.Api.Blog.csproj", "{D218AE83-DCB5-4C49-8642-A30EA38C761B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hospital.Api.Blog", "Hospital.Api.Blog\Hospital.Api.Blog.csproj", "{D218AE83-DCB5-4C49-8642-A30EA38C761B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hospital.Web", "Hospital.Web\Hospital.Web.csproj", "{BFD02740-C856-4AF1-9F90-8B85055ED40D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{D218AE83-DCB5-4C49-8642-A30EA38C761B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D218AE83-DCB5-4C49-8642-A30EA38C761B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D218AE83-DCB5-4C49-8642-A30EA38C761B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BFD02740-C856-4AF1-9F90-8B85055ED40D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFD02740-C856-4AF1-9F90-8B85055ED40D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFD02740-C856-4AF1-9F90-8B85055ED40D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BFD02740-C856-4AF1-9F90-8B85055ED40D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
