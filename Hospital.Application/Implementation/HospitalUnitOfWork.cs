@@ -55,10 +55,12 @@ namespace Hospital.Application.Implementation
         public IDoctorRepository DoctorRepository => _doctorRepository ??= new DoctorRepository(dbContext);
 
         private IAppointmentRepository _appointmentRepository;
-        public IAppointmentRepository AppointmentRepository => _appointmentRepository ??= new AppointmentRepository(dbContext);
+        public IAppointmentRepository Appointment => _appointmentRepository ??= new AppointmentRepository(dbContext);
 
         private IPatientRepository _patientRepository;
         public IPatientRepository PatientRepository => _patientRepository ??=new PatientRepository(dbContext);
+
+
 
         #endregion
     }

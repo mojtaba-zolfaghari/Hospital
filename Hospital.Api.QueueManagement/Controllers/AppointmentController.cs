@@ -32,7 +32,7 @@ namespace Hospital.Api.QueueManagement.Controllers
         {
             try
             {
-                var appointementFree = _hospitalUnitOfWork.AppointmentRepository.Get(c => !c.IsConfirmed && c.Doctor.IsAvailable, null, null, null, c => c.Doctor);
+                var appointementFree = _hospitalUnitOfWork.Appointment.Get(c => !c.IsConfirmed && c.Doctor.IsAvailable, null, null, null, c => c.Doctor);
 
                 var response = appointementFree.Select(d => new Get_AvailableDoctors_Response
                 {
@@ -54,7 +54,7 @@ namespace Hospital.Api.QueueManagement.Controllers
         {
             try
             {
-                var selectDate = await _hospitalUnitOfWork.AppointmentRepository.GetAsync(
+                var selectDate = await _hospitalUnitOfWork.Appointment.GetAsync(
                      c => c.DoctorId == request.DoctorId &&
                      c.Date == request.Date &&
                      !c.IsConfirmed
@@ -81,7 +81,7 @@ namespace Hospital.Api.QueueManagement.Controllers
                     };
                 }
 
-                if (_hospitalUnitOfWork.AppointmentRepository.Get(
+                if (_hospitalUnitOfWork.Appointment.Get(
                      c => c.DoctorId == request.DoctorId &&
                      c.Date == request.Date &&
                      c.Patient.NationalCode == request.NationalCode,null,null,null,c=>c.Patient).Count() > 0)
@@ -94,10 +94,10 @@ namespace Hospital.Api.QueueManagement.Controllers
                 newQ.PatientId = patient.Id;
                 newQ.DoctorId = request.DoctorId;
                 newQ.Status = Domain.Shared.SharedEnums.AppointmentStatus.Requested;
-                 _hospitalUnitOfWork.AppointmentRepository.Update(newQ);
+                 _hospitalUnitOfWork.Appointment.Update(newQ);
                 if (existPatint == null)_hospitalUnitOfWork.PatientRepository.Create(patient);
                 await _hospitalUnitOfWork.SaveAsync();
-                return new ServiceActionResult<string>(newQ.ToString(), "DONE");
+                return new ServiceActionResult<string>(newQ.QueuingNumber.ToString(), "DONE");
             }
             catch (Exception ex)
             {
@@ -112,7 +112,7 @@ namespace Hospital.Api.QueueManagement.Controllers
             {
                 for (int i = 0; i < request.Count; i++)
                 {
-                    _hospitalUnitOfWork.AppointmentRepository.Create(new Appointment
+                    _hospitalUnitOfWork.Appointment.Create(new Appointment
                     {
                         DoctorId = request.DoctorId,
                         Date = request.Date,
@@ -139,9 +139,9 @@ namespace Hospital.Api.QueueManagement.Controllers
         {
             try
             {
-                var selectedAppointment = await _hospitalUnitOfWork.AppointmentRepository.GetOneAsync(c => c.Id == request.AppointmentId);
+                var selectedAppointment = await _hospitalUnitOfWork.Appointment.GetOneAsync(c => c.Id == request.AppointmentId);
                 int lastQ = 0;
-                var lastQuList = await _hospitalUnitOfWork.AppointmentRepository.GetAsync(
+                var lastQuList = await _hospitalUnitOfWork.Appointment.GetAsync(
                      c => c.DoctorId == selectedAppointment.DoctorId &&
                      c.Date == selectedAppointment.Date &&
                      c.IsConfirmed
@@ -153,7 +153,7 @@ namespace Hospital.Api.QueueManagement.Controllers
                 selectedAppointment.IsConfirmed = true;
                 selectedAppointment.Status = request.Status;
                 selectedAppointment.QueuingNumber = NewQNumber;
-                _hospitalUnitOfWork.AppointmentRepository.Update(selectedAppointment);
+                _hospitalUnitOfWork.Appointment.Update(selectedAppointment);
                 await _hospitalUnitOfWork.SaveAsync();
 
 

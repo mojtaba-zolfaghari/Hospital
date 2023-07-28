@@ -41,13 +41,7 @@ namespace Hospital.Api.QueueManagement.Controllers
                         LastName = request.LastName,
                         FirstName = request.FirstName,
                         CapacityPerDay = request.CapacityPerDay,
-                        WorkingHours = request.WorkingHours.Select(wh => new WorkingHour
-                        {
-                            DayOfWeek = wh.DayOfWeek,
-                            StartTime = TimeSpan.Parse(wh.StartTime),
-                            EndTime = TimeSpan.Parse(wh.EndTime),
-                            Capacity = wh.Capacity
-                        }).ToList()
+                        IsAvailable = false
                     };
 
                     _hospitalUnitOfWork.DoctorRepository.Create(doctor);
@@ -81,13 +75,6 @@ namespace Hospital.Api.QueueManagement.Controllers
                     FirstName = doctor.FirstName,
                     LastName = doctor.LastName,
                     CapacityPerDay = doctor.CapacityPerDay,
-                    WorkingHours = doctor.WorkingHours?.Select(wh => new WorkingHourDTO()
-                    {
-                        DayOfWeek = wh.DayOfWeek,
-                        StartTime = wh.StartTime.ToString(@"hh\:mm"),
-                        EndTime = wh.EndTime.ToString(@"hh\:mm"),
-                        Capacity = wh.Capacity
-                    }).ToList()
                 };
                 return new ServiceActionResult<Get_Doctor_Response>(doctorDTO, "DONE");
 
@@ -117,13 +104,6 @@ namespace Hospital.Api.QueueManagement.Controllers
                     FirstName = doctor.FirstName,
                     LastName = doctor.LastName,
                     CapacityPerDay = doctor.CapacityPerDay,
-                    WorkingHours = doctor.WorkingHours?.Select(wh => new WorkingHourDTO()
-                    {
-                        DayOfWeek = wh.DayOfWeek,
-                        StartTime = wh.StartTime.ToString(@"hh\:mm"),
-                        EndTime = wh.EndTime.ToString(@"hh\:mm"),
-                        Capacity = wh.Capacity
-                    }).ToList()
                 }).ToList();
 
                 var listResult = new ListResult<Get_Doctor_Response>(doctorResponses, totalCount);

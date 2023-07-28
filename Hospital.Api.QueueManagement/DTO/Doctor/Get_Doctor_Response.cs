@@ -6,6 +6,5 @@
             public string FirstName { get; set; }
             public string LastName { get; set; }
             public int CapacityPerDay { get; set; }
-            public List<WorkingHourDTO> WorkingHours { get; set; }
     }
 }

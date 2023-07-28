@@ -20,7 +20,7 @@ var locations =[{
 	"icons":"default",
 	"profile_link":"profile.html",
 	"total_review":"17",
-	"image":'assets/img/doctors/doctor-01.jpg'
+	"image":'../img/doctors/doctor-01.jpg'
 	}, {
 		
 	"id":02,
@@ -34,7 +34,7 @@ var locations =[{
 	"icons":"default",
 	"profile_link":"profile.html",
 	"total_review":"35",
-	"image":'assets/img/doctors/doctor-02.jpg'
+	"image":'../img/doctors/doctor-02.jpg'
 	}, {
 	"id":03,
 	"doc_name":"دکتر دبورا فرشته",
@@ -47,7 +47,7 @@ var locations =[{
 	"icons":"default",
 	"profile_link":"profile.html",
 	"total_review":"27",
-	"image":'assets/img/doctors/doctor-03.jpg'
+	"image":'../img/doctors/doctor-03.jpg'
 	}, {
 	"id":04,
 	"doc_name":"دکتر صوفیا برنت",
@@ -60,7 +60,7 @@ var locations =[{
 	"icons":"default",
 	"profile_link":"profile.html",
 	"total_review":"4",
-	"image":'assets/img/doctors/doctor-04.jpg'
+	"image":'../img/doctors/doctor-04.jpg'
 	}, {
 	"id":05,
 	"doc_name":"دکتر ماروین کمپبل",
@@ -73,7 +73,7 @@ var locations =[{
 	"icons":"default",
 	"profile_link":"profile.html",
 	"total_review":"66",
-	"image":'assets/img/doctors/doctor-05.jpg'
+	"image":'../img/doctors/doctor-05.jpg'
 	}, {
 	"id":06,
 	"doc_name":"دکتر کاترین برتولد",
@@ -86,7 +86,7 @@ var locations =[{
 	"icons":"default",
 	"profile_link":"profile.html",
 	"total_review":"52",
-	"image":'assets/img/doctors/doctor-06.jpg'
+	"image":'../img/doctors/doctor-06.jpg'
 	}, {
 	"id":07,
 	"doc_name":"دکتر لیندا توبین",
@@ -99,7 +99,7 @@ var locations =[{
 	"icons":"default",
 	"profile_link":"profile.html",
 	"total_review":"43",
-	"image":'assets/img/doctors/doctor-07.jpg'
+	"image":'../img/doctors/doctor-07.jpg'
 	}, {
 	"id":08,
 	"doc_name":"دکتر پل ریچارد",
@@ -112,7 +112,7 @@ var locations =[{
 	"icons":"default",
 	"profile_link":"profile.html",
 	"total_review":"49",
-	"image":'assets/img/doctors/doctor-08.jpg'
+	"image":'../img/doctors/doctor-08.jpg'
 	}, {
 	"id":09,
 	"doc_name":"دکتر جان گیبس",
@@ -125,7 +125,7 @@ var locations =[{
 	"icons":"default",
 	"profile_link":"profile.html",
 	"total_review":"112",
-	"image":'assets/img/doctors/doctor-09.jpg'
+	"image":'../img/doctors/doctor-09.jpg'
 	}, {
 	"id":10,
 	"doc_name":"دکتر اولگا بارلو",
@@ -138,7 +138,7 @@ var locations =[{
 	"icons":"default",
 	"profile_link":"profile.html",
 	"total_review":"65",
-	"image":'assets/img/doctors/doctor-10.jpg'
+	"image":'../img/doctors/doctor-10.jpg'
 	}, {
 	"id":11,
 	"doc_name":"دکتر جولیا واشنگتن",
@@ -151,7 +151,7 @@ var locations =[{
 	"icons":"default",
 	"profile_link":"profile.html",
 	"total_review":"5",
-	"image":'assets/img/doctors/doctor-11.jpg'
+	"image":'../img/doctors/doctor-11.jpg'
 	}, {
 	"id":12,
 	"doc_name":"قرعه کشی.شاون آپون",
@@ -164,12 +164,12 @@ var locations =[{
 	"icons":"default",
 	"profile_link":"profile.html",
 	"total_review":"5",
-	"image":'assets/img/doctors/doctor-12.jpg'
+	"image":'../img/doctors/doctor-12.jpg'
 	}
 	];
 
 var icons = {
-  'default':'assets/img/marker.png'
+  'default':'../img/marker.png'
 };
 
 function show() {

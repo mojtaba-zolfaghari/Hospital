@@ -7,15 +7,7 @@ namespace Hospital.Api.QueueManagement.DTO.Doctor
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public int CapacityPerDay { get; set; }
-        public List<WorkingHourDTO> WorkingHours { get; set; }
     }
 
 
-    public class WorkingHourDTO
-    {
-        public DayOfWeekEnum DayOfWeek { get; set; }
-        public string StartTime { get; set; }
-        public string EndTime { get; set; }
-        public int Capacity { get; set; }
-    }
 }

@@ -33,12 +33,7 @@ namespace Hospital.Application.Interfaces
 
         #region Doctor
         IDoctorRepository DoctorRepository { get; }
-        IAppointmentRepository AppointmentRepository { get; }
         IPatientRepository PatientRepository { get; }
-        #endregion
-
-        #region Doctor
-        IWorkingHourRepository WorkingHourRepository { get; }
         #endregion
         #region Appointment
         IAppointmentRepository Appointment { get; }

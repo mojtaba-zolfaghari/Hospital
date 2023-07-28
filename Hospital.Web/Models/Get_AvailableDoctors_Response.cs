@@ -1,6 +1,4 @@
-﻿using static Hospital.Domain.Shared.SharedEnums;
-
-namespace Hospital.Api.QueueManagement.DTO.Doctor
+﻿namespace Hospital.Web.Models
 {
     public class Get_AvailableDoctors_Response
     {
